@@ -1,0 +1,6 @@
+.apptainer/
+.snakemake/
+00_RawData
+01_Reference   
+05_Output/ 
+06_Report/

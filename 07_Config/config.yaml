@@ -1,0 +1,70 @@
+# ==================================================
+# Configuration parameters of the workflow
+# ==================================================
+
+# ──────────────────── Global ──────────────────────
+
+samples: samples.tsv
+samples_prefix: EN00011089_
+
+# Nomenclature for the paired-end reads
+types:
+  - "1" # Forward read
+  - "2" # Reverse read
+
+metadata: metadata.tsv
+
+reference:
+  # Name of the reference genome
+  name: GRCh38.p14
+  # Download link for the reference genome's files
+  link_ref_fasta: https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_genomic.fna.gz
+  link_ref_gtf: https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_genomic.gtf.gz
+  # File name for the download reference genome's files
+  ref_fasta: GCF_000001405.40_GRCh38.p14_genomic.fna.gz
+  ref_gtf: GCF_000001405.40_GRCh38.p14_genomic.gtf.gz
+
+# ─────────────────── 00_Clean ────────────────────
+
+### FastQC ###
+fastqc:
+  threads: 4
+
+### Cutadapt ###
+cutadapt:
+  # Whether or not to use remove primers with cutadapt
+  use: true
+  # Number of core to use
+  thread: 4
+  # Use a string for one primer, a list for multiple, or leave empty ("") to skip
+  # e.g. " ", ACACTCTTTCCCTACACGACGC or [SEQ1, SEQ2]
+  # 5′ primers : trimmed from the START of the read (-g / -G)
+  primer_5_forward: ""
+  primer_5_reverse: ""
+  # 3′ primers : trimmed from the END of the read (-a / -A)
+  primer_3_forward: AGATCGGAAGAGCACACGTCTGAACTCCAGTCA
+  primer_3_reverse: AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
+  # Trimming parameters
+  primer_err: 0.1
+  primer_overlap: 10
+
+### Trimmomatic ###
+trimmomatic:
+  # Whether or not to trim with trimmomatic
+  use: true
+  # Number of core to use
+  thread: 4
+  # Trimming parameters
+  leading: 20
+  trailing: 15
+  slidingwindow_size: 4
+  slidingwindow_quality: 15
+  minlen: 36
+
+# ──────────────── 01_Alignement ──────────────────
+
+
+
+
+
+

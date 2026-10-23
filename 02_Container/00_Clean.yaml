@@ -1,0 +1,12 @@
+name: Clean
+
+channels:
+  - bioconda
+  - conda-forge
+  - default
+
+dependencies:
+  - fastqc=0.13.0
+  - multiqc=1.35
+  - cutadapt=5.2
+  - trimmomatic=0.41
