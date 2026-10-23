@@ -1,0 +1,9 @@
+name: Alignement
+
+channels:
+  - bioconda
+  - conda-forge
+  - default
+
+dependencies:
+  - star=2.7.11b
