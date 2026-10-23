@@ -76,7 +76,7 @@ rule fastqc_raw:
         mkdir -p $(dirname {output.fastqc_report_zip})
         fastqc \
             --threads {threads} \
-            --outdir $(dirname {output.fastqc_report_zip}) \
+            --outdir  $(dirname {output.fastqc_report_zip}) \
             {input.fastq} 
         """
 
@@ -97,8 +97,8 @@ rule multiqc_raw:
         """
         multiqc \
             --no-data-dir \
-            --outdir $(dirname {output.multiqc_report}) \
-            --filename  $(basename {output.multiqc_report}) \
+            --outdir      $(dirname {output.multiqc_report}) \
+            --filename    $(basename {output.multiqc_report}) \
             {input.fastqc_reports_zip}
 		"""
 
@@ -140,16 +140,16 @@ if CUTADAPT:
         shell:
             """
             cutadapt \
-                -j {threads} \
                 {params.primer_5_fwd} \
                 {params.primer_5_rev} \
                 {params.primer_3_fwd} \
                 {params.primer_3_rev} \
+                -j {threads} \
                 -O {params.primer_overlap} \
                 -e {params.primer_err} \
-                --match-read-wildcards \
                 -o {output.fastq_1_cutadapt} \
                 -p {output.fastq_2_cutadapt} \
+                --match-read-wildcards \
                 {input.fastq_1} \
                 {input.fastq_2} \
             """
@@ -249,7 +249,7 @@ rule fastqc_cleaned:
         mkdir -p $(dirname {output.fastqc_report_zip})
         fastqc \
             --threads {threads} \
-            --outdir $(dirname {output.fastqc_report_zip}) \
+            --outdir  $(dirname {output.fastqc_report_zip}) \
             {input.fastq}
         """
 
@@ -270,8 +270,8 @@ rule multiqc_cleaned:
         """		
         multiqc \
             --no-data-dir \
-            --outdir $(dirname {output.multiqc_report}) \
-            --filename  $(basename {output.multiqc_report}) \
+            --outdir   $(dirname {output.multiqc_report}) \
+            --filename $(basename {output.multiqc_report}) \
             {input.fastqc_report_zip}
 		"""
 
@@ -279,4 +279,5 @@ rule multiqc_cleaned:
 # Input FastQ to use for downstream analysis
 # ============================================================
 # This the path to use for the following rule if you need the cleaned reads
-# fastq = FASTQ_FOLDER + "{sample}_{type}" + FASTQ_SUFFIX + ".fastq.gz"
+# fastq_1 = FASTQ_FOLDER + "{sample}_" + TYPES[0] + FASTQ_SUFFIX + ".fastq.gz",
+# fastq_2 = FASTQ_FOLDER + "{sample}_" + TYPES[1] + FASTQ_SUFFIX + ".fastq.gz"
