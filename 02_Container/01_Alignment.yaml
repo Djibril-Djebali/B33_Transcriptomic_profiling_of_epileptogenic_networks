@@ -7,3 +7,5 @@ channels:
 
 dependencies:
   - star=2.7.11b
+  - gzip=1.14
+  - samtools=1.24
