@@ -63,8 +63,37 @@ trimmomatic:
 
 # ──────────────── 01_Alignement ──────────────────
 
+star_index:
+  # Number of core to use
+  threads: 12
+  # In byte
+  ram_limit: 50000000000
+  # Ideally, this length should be equal to ReadLength-1
+  # In case if varying length, the ideal value is max(ReadLength-1)
+  # In most cases, the default value of 100 will work as well as the ideal value.
+  sjdbOverhang: 149 
 
+star_alignment:
+  # Number of core to use
+  threads: 8
+  # In byte
+  ram_limit: 30000000000
+  # Method to use to process compressed files
+  readFilesCommand: zcat
+  # Max number of multiple alignments allowed for a read: if exceeded, the read is considered unmapped
+  outFilterMultimapNmax: 10 
+  # Improve novel junction detection (but double execution time)
+  # e.g. None or Basic
+  twopass: None
+  # SAM tags to include
+  outSAMattributes: "NH HI AS NM MD" 
+  # For compatibility with transcriptome assembly
+  # e.g. None or intronMotif
+  outSAMstrandField: None
 
+bam_index:
+  # Indexing BAM files into BAI files if needed
+  use: true
 
-
+# ────────────────── 02_Counts ────────────────────
 

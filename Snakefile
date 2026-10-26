@@ -37,22 +37,27 @@ TYPES = config["types"]
 # Tools usage variable
 TRIMMOMATIC = config["trimmomatic"]["use"]
 CUTADAPT    = config["cutadapt"]["use"]
+BAM_INDEX   = config["bam_index"]["use"]
 
 # ============================================================ 
-# Rules 
+# Target output 
 # ============================================================ 
 # Rules expand variables
 FASTQ_STATES = (["multiqc_raw", "multiqc_cleaned"] if (TRIMMOMATIC or CUTADAPT) else ["multiqc_raw"])
+ALIGN_EXT    = ([".bam", ".bai"] if BAM_INDEX else [".bam"])
 
 rule all:
 	input:
 		##### 00_Clean: Read Quality Control and Preprocessing #####
-		multiqc = expand(REPORT + "00_Clean/{fastq_state}.html", fastq_state = FASTQ_STATES),
+		multiqc_clean = expand(REPORT + "00_Clean/{fastq_state}.html", fastq_state = FASTQ_STATES),
 		##### 01_Alignement: Mapping reads into the reference genome #####
-		bam = expand()
+		results_star  = expand(OUTPUT + "01_Alignment/02_BAM/{sample}_Aligned.sortedByCoord.out{align_ext}", sample = SAMPLES, align_ext = ALIGN_EXT),
+		mutiqc_star   = REPORT + "01_Alignment/multiqc_alignment.html",
+		##### 02_Counts: Quantifying expression from the mapping results #####
 
 # ============================================================ 
-# Rules 
+# Loading rules 
 # ============================================================ 
 include: WORKFLOW + "00_Clean.smk"
 include: WORKFLOW + "01_Alignement.smk"
+include: WORKFLOW + "02_Counts.smk"
