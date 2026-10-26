@@ -136,7 +136,7 @@ if CUTADAPT:
         conda:
             CONTAINER + "00_Clean.yaml"
         message:
-            "Removing primers of {wildcards.sample} with Cutadapt"
+            "Removing primers of {wildcards.sample} with Cutadapt."
         shell:
             """
             cutadapt \
@@ -192,7 +192,7 @@ if TRIMMOMATIC:
         conda:
             CONTAINER + "00_Clean.yaml"
         message:
-            "Trimming {wildcards.sample} raw reads with Trimmomatic"
+            "Trimming {wildcards.sample} raw reads with Trimmomatic."
         shell:
             """
             trimmomatic \
