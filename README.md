@@ -9,9 +9,9 @@ Djibril Djebali (@Djibril-Djebali), https://centuri-livingsystems.org/d-djebali
 This workflow performs a bulkRNA-seq analysis to study gene expression and gene variant from the sequencing output.
 
 The different analysis steps:
- - [01_Clean](04_Workflow/01_Clean.smk) the quality of the raw reads are assessed using [FastQC v0.13.0](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and [MultiQC v1.35](https://github.com/multiqc/multiqc), and then they are trimmed with [Trimmomatic v0.36](https://github.com/usadellab/trimmomatic) to remove bad quality sequences and adapters are cut with [Cutadapt v5.2](https://cutadapt.readthedocs.io/en/stable/).
- - [02_Alignment](04_Workflow/02_Alignment.smk) the genome index is built and used to map the raw reads with [STAR v2.7.11b](https://github.com/alexdobin/STAR) and [Samtools v1.21](https://github.com/samtools/samtools) to convert resulting sam files in bam files.
- - [03_Counts](04_Workflow/03_Counts.smk) Quantification of gene-level read counts from aligned reads and generating count matrices with FeatureCounts from the package [Subreads v2.0.8](https://subread.sourceforge.net/featureCounts.html) and filtering of lowly expressed genes based on CPM thresholds to improve statistical robustness.
+ - [01_Clean](04_Workflow/01_Clean.smk): The quality of the raw reads are assessed using [FastQC v0.13.0](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and [MultiQC v1.35](https://github.com/multiqc/multiqc), and then they are trimmed with [Trimmomatic v0.36](https://github.com/usadellab/trimmomatic) to remove bad quality sequences and adapters are cut with [Cutadapt v5.2](https://cutadapt.readthedocs.io/en/stable/).
+ - [02_Alignment](04_Workflow/02_Alignment.smk): The genome index is built and used to map the raw reads with [STAR v2.7.11b](https://github.com/alexdobin/STAR) and [Samtools v1.21](https://github.com/samtools/samtools) to convert resulting sam files in bam files.
+ - [03_Counts](04_Workflow/03_Counts.smk): Quantification of gene-level read counts from aligned reads and generating count matrices with FeatureCounts from the package [Subreads v2.0.8](https://subread.sourceforge.net/featureCounts.html) and filtering of lowly expressed genes based on CPM thresholds to improve statistical robustness.
 
 ## Usage
 
@@ -63,4 +63,10 @@ Otherwise you can use [GNU make v4.3](https://github.com/mirror/make) and pull t
 
 ### Step 4: Investigate results 
 
-After successful execution, you can access the results in:
+After successful execution, you can access the following reports in [06_Report](06_Report/):
+
+- []()
+
+You can also access, the following output in [05_Output](05_Output/):
+
+- []()
