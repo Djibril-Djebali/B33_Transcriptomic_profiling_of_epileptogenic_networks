@@ -215,7 +215,7 @@ rule multiqc_alignment:
     conda:
         CONTAINER + "00_Clean.yaml"
     message:
-        "Aggregating STAR alignment reports with MultiQC."
+        "Aggregating STAR alignment log output with MultiQC."
     shell:
         """
         multiqc \
