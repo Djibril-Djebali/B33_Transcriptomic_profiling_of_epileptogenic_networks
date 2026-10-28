@@ -21,7 +21,8 @@ run:
 			-s Snakefile \
 			--use-conda \
 			--sdm apptainer \
-			--cores 24 
+			--cores 24 \
+			--resources star_slot=4 
 
 dry:
 	@apptainer exec ./.apptainer/snakemake_v9.27.0.sif \
