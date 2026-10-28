@@ -45,15 +45,20 @@ BAM_INDEX   = config["bam_index"]["use"]
 # Rules expand variables
 FASTQ_STATES = (["multiqc_raw", "multiqc_cleaned"] if (TRIMMOMATIC or CUTADAPT) else ["multiqc_raw"])
 ALIGN_EXT    = ([".bam", ".bai"] if BAM_INDEX else [".bam"])
+MATRIX       = ["count_matrix", "cpm_matrix", "filtered_cpm_matrix", "filtered_count_matrix", "removed_cpm_matrix", "removed_count_matrix"]
 
 rule all:
 	input:
 		##### 00_Clean: Read Quality Control and Preprocessing #####
-		multiqc_clean = expand(REPORT + "00_Clean/{fastq_state}.html", fastq_state = FASTQ_STATES),
+		multiqc_clean  = expand(REPORT + "00_Clean/{fastq_state}.html", fastq_state = FASTQ_STATES),
 		##### 01_Alignement: Mapping reads into the reference genome #####
-		results_star  = expand(OUTPUT + "01_Alignment/02_BAM/{sample}_Aligned.sortedByCoord.out{align_ext}", sample = SAMPLES, align_ext = ALIGN_EXT),
-		mutiqc_star   = REPORT + "01_Alignment/multiqc_alignment.html",
-		##### 02_Counts: Quantifying expression from the mapping results #####
+		results_star   = expand(OUTPUT + "01_Alignment/02_BAM/{sample}_Aligned.sortedByCoord.out{align_ext}", sample = SAMPLES, align_ext = ALIGN_EXT),
+		mutiqc_star    = REPORT + "01_Alignment/multiqc_alignment.html",
+		##### 02_Counts: Quantification of expression from the mapping results #####
+		sample_counts  = expand(OUTPUT + "02_Counts/01_Samples/{sample}_expression_counts.tsv", sample = SAMPLES),
+		matrix_counts  = expand(OUTPUT + "02_Counts/02_Matrix/{matrix}.tsv", matrix = MATRIX),
+		multiqc_counts = REPORT + "02_Counts/multiqc_featurecounts.html",
+
 
 # ============================================================ 
 # Loading rules 

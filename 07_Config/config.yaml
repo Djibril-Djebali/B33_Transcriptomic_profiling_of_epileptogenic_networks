@@ -1,5 +1,5 @@
 # ==================================================
-# Configuration parameters of the workflow
+# Configuration of the workflow
 # ==================================================
 
 # ──────────────────── Global ──────────────────────
@@ -21,8 +21,8 @@ reference:
   link_ref_fasta: https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_genomic.fna.gz
   link_ref_gtf: https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_genomic.gtf.gz
   # File name for the download reference genome's files
-  ref_fasta: GCF_000001405.40_GRCh38.p14_genomic.fna.gz
-  ref_gtf: GCF_000001405.40_GRCh38.p14_genomic.gtf.gz
+  ref_fasta: GCF_000001405.40_GRCh38.p14_genomic.fna
+  ref_gtf: GCF_000001405.40_GRCh38.p14_genomic.gtf
 
 # ─────────────────── 00_Clean ────────────────────
 
@@ -87,13 +87,47 @@ star_alignment:
   twopass: None
   # SAM tags to include
   outSAMattributes: "NH HI AS NM MD" 
-  # For compatibility with transcriptome assembly
+  # 
+  # If using a stranded library, also set 
+  # featurecounts strand to 1 or 2
+  # AND change outSAMstrandField to intronMotif
   # e.g. None or intronMotif
   outSAMstrandField: None
 
 bam_index:
   # Indexing BAM files into BAI files if needed
-  use: true
+  use: false
 
 # ────────────────── 02_Counts ────────────────────
 
+featurecounts:
+  # Number of core to use
+  threads: 8
+  # Feature type to count
+  # e.g exon or gene
+  type: exon
+  # GTF attribute to group features
+  # e.g gene_id or gene_name
+  group: gene_id
+  # Strandness of the librairy
+  # e.g 0 = unstranded, 1 = stranded (forward), 2 = reversely stranded
+  strand: 0
+  # Only count if both reads are mapped
+  B: true
+  # Discard pairs mapping to different chromosomes
+  C: true
+  # The minimum mapping quality score a read must satisfy in
+  # order to be counted. For paired-end reads, at least one end
+  # should satisfy this criteria.
+  Q: 0
+  # Count multi-mapping reads (uses NH tag)
+  multimapped: false
+  # Assign fractional counts for multi-mappers (uses with -M)
+  fraction: false
+  # Only count primary alignments
+  primary: false
+  # e.g "", "gene_name,gene_biotype" ...
+  extraAttribute: "" 
+
+cpm:
+  threshold: 1
